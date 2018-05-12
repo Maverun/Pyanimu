@@ -1,5 +1,5 @@
-from .. import error
 from . import endpoint,object
+from .. import error
 
 class UserStatus:
     watching = 0
@@ -61,19 +61,13 @@ class Mal:
         self.connect = connection
 
         self.connect.set_auth(username,password)
-        self.verify()
-
 
     def verify(self):
         try:
-            data = self.connect.get_api(endpoint.verify_user,return_type="text", obj = object.verify_user)
-        except:
-            raise error.Unverify_account("This account either don't exist or incorrect username/password")
-        else:
-            if data:
-                print(data)
-                return data
+            return bool(self.connect.get_api(endpoint.verify_user,return_type="text", obj = object.verify_user))
+        except error.Http_denied:
             return False
+            #raise error.Unverify_account("This account either don't exist or incorrect username/password")
 
     def search_anime(self,title):
         #searching anime list by calling api with endpoint of search anime, and params are title. We are also telling it is text which is xml, and create it by giving instances of object.

@@ -8,18 +8,23 @@ so that it can call method without easily without checking type.
 from . import __github__
 from .error import Http_denied
 
+aio_boolean = False
+req_boolean = False
 
 try:#If user want to use aiohttps, they will need to install aiohttp, otherwise it will throw out an error.
     import aiohttp
     import asyncio
 except ImportError:
-    raise NotImplementedError("You need to install aiohttp in order to use AioAnimu")
+    aio_boolean = True
 else:
     class AioAnimu:
         """
         Version of Aiohttp
         """
         def __init__(self,user_agent = None):
+            if aio_boolean:
+                raise NotImplementedError("You need to install aiohttp in order to use AioAnimu")
+
             self.type =  "Aiohttp" #dont ask me please
             self.header = {"User-Agent":user_agent or __github__}
 
@@ -29,7 +34,7 @@ else:
 
         #get data
         async def get_api(self,endpoint,obj,params = {},return_type = "json",):
-            with aiohttp.ClientSession(auth = self.auth,headers=self.header) as session:
+            async with aiohttp.ClientSession(auth = self.auth,headers=self.header) as session:
                 async with session.get(endpoint,headers = self.header,params=params) as resp:
                     # resp = await self.session.get(endpoint,auth = self.auth,params = params)
                     if resp.status == 200:
@@ -49,13 +54,16 @@ else:
 try:#unless User want to use requests, they will need to install requests, otherwise it will throw out an error.
     import requests
 except ImportError:
-    raise NotImplementedError("You will need to install requests in order to use ReqAnimu")
+    req_boolean = True
 else:
     class ReqAnimu:
         """
         Version of Requests
         """
         def __init__(self,user_agent = None):
+            if req_boolean:
+                raise NotImplementedError("You will need to install requests in order to use ReqAnimu")
+
             self.type =  "Requests" #dont ask me please
             self.header = {"User-Agent":user_agent or __github__}
 

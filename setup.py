@@ -1,5 +1,5 @@
 from pyanimu import __name__,__author__,__version__,__github__,__license__
-from setuptools import setup
+from setuptools import setup,find_packages
 
 setup(
     name = __name__,
@@ -7,5 +7,6 @@ setup(
     version = __version__,
     url = __github__,
     license = __license__,
-    keywords = "Pyanimu"
+    keywords = "Pyanimu",
+    packages = find_packages()
 )

@@ -79,7 +79,7 @@ def get_user(data_anime,data_manga,anime,manga):
 
     """
     user = _covert_data(data_anime,User,"myinfo") #first we will create my user info
-    temp = BeautifulSoup(data_manga)
+    temp = BeautifulSoup(data_manga,"lxml")
     user.update_manga(**_xml_to_kwargs(temp.find("myinfo")))
     user.get_anime_list(anime)
     user.get_manga_list(manga)
@@ -259,7 +259,7 @@ class Manga:
 
 
         #user_relatives
-        self.my_id = kwargs.get("my_id")
+        self.user_id = kwargs.get("my_id")
         self.read_chapters = kwargs.get("my_read_chapters")
         self.read_volumes = kwargs.get("my_read_volumes")
         self.date_start = kwargs.get("my_start_date")
