@@ -26,7 +26,7 @@ To create an instance.
 ```python
 from pyanimu import Mal, connectors, Userstatus
 
-con = connectors.ReqAnimu() # or AioAnimu() for async
+con = connectors.ReqAnimu(user_agent = "Pyanimu") # or AioAnimu() for async
 
 # Since every endpoint requires account expect one-two, therefore username/password isn't optional
 mal = Mal(username, password,con)  
@@ -52,7 +52,8 @@ for x in anime:
 
 ```
 
-##using Async function 
+## using Async function
+ 
 It is same as Sync function except search user which is aio_search_user.
 
 ```python 
