@@ -1,17 +1,14 @@
-This is Pyanimu, inspired by [Pymoe](https://github.com/ccubed/PyMoe) and [osuapi](https://github.com/khazhyk/osuapi) for their way of structure lib, (osuapi for having sync/async).
+This is Pyanimu. The structure was inspired by [Pymoe](https://github.com/ccubed/PyMoe) and [Osuapi](https://github.com/khazhyk/osuapi). The sync/async structure is very similar to Osuapi.
 
-This is created to help people like me not dealing with XML anymore. It is not perfect ideal lib. For a better used, I recommend checking out [Pymoe](https://github.com/ccubed/PyMoe)(sync only)
+This is created to help folk like me who don't want to deal with XML anymore. It is a not perfect, non ideal library. For a more frequently used library I recommend Pymoe, but [Pymoe](https://github.com/ccubed/PyMoe) is sync only.
 
-This is my first public library to be share with other, it was created for fun learning educations purpose.
-Any feedback are always appreciates, but I may not able to update it often.
+This is my first public library that I've shared with others. It was created for fun and for learning. Any feedback is always appreciated, but I may not be able to update it often.
 
-I may add more stuff not just myanimelist. This is why I went with this structure way.
+When I get the time, I might add more than just myanimelist, this is why it is structured in this modular fashion. Feel free to give me a heads up about missing documentation as the MAL API documentation is...awful.
 
-I would love to apology in advanced, if there is any thing that was missing from here or inconnect way of doing it.
-Please do give me head up about missing document as MAL API doc...is awful.
+I apologize in advance if there is anything missing or implemented incorrectly.
 
 I am ready to be roast.
-
 
 ## Requirement Libs:
 ```
