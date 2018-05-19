@@ -2,9 +2,9 @@ from . import endpoint,object
 from .. import error
 
 class UserStatus:
-    watching = 0
-    reading = 0
-    completed = 1
+    watching = 1
+    reading = 1
+    completed = 2
     onhold = 3
     dropped = 4
     plantowatch = 6
