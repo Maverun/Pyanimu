@@ -64,7 +64,7 @@ class Mal:
 
     def verify(self):
         try:
-            return bool(self.connect.get_api(endpoint.verify_user,return_type="text", obj = object.verify_user))
+            return self.connect.get_api(endpoint.verify_user,return_type="text", obj = object.verify_user)
         except error.Http_denied:
             return False
             #raise error.Unverify_account("This account either don't exist or incorrect username/password")

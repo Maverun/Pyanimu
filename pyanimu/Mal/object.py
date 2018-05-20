@@ -324,14 +324,13 @@ class User:
         self.anime_watching = kwargs.get("user_watching")
         self.anime_completed = kwargs.get("user_completed")
         self.anime_onhold = kwargs.get("user_onhold")
-        self.anime_dropped  = kwargs.get("user_dropped ")
-        self.anime_plan_to_read  = kwargs.get("user_plantoread ")
+        self.anime_dropped  = kwargs.get("user_dropped")
+        self.anime_plan_to_watch  = kwargs.get("user_plantowatch")
         self.anime_days = kwargs.get("user_days_spent_watching")
 
 
     def update_manga(self,**kwargs):
         #manga relatives
-        self.manga_list = kwargs.get("manga_list")
         self.manga_reading = kwargs.get("user_reading")
         self.manga_completed = kwargs.get("user_completed")
         self.manga_onhold = kwargs.get("user_onhold")

@@ -37,7 +37,7 @@ else:
             async with aiohttp.ClientSession(auth = self.auth,headers=self.header) as session:
                 async with session.get(endpoint,headers = self.header,params=params) as resp:
                     # resp = await self.session.get(endpoint,auth = self.auth,params = params)
-                    if resp.status == 200:
+                    if resp.status in (200,201):
                         data = None
                         if return_type == "text":
                             data = await resp.text()

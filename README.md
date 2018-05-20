@@ -158,6 +158,27 @@ last_updated:string: yyyy-mm-dd last update touch by users
 </details>
 
 <details>
+ <summary>User Object</summary>
+
+```
+anime:list:Anime object list that you hve seen
+manga:list:Manga object list that you hve seen
+anime_watching:string: watching tracking 
+anime_completed:string: completed tracking 
+anime_onhold:string: onhold tracking 
+anime_dropped :string: dropped tracking  
+anime_plan_to_watch :string: plan_to_read tracking  
+anime_days:string: days tracking 
+manga_reading:string: reading tracking 
+manga_completed:string: completed tracking 
+manga_onhold:string: onhold tracking 
+manga_dropped:string: dropped tracking 
+manga_plan_to_read:string: plan_to_read tracking 
+manga_days:string: days tracking 
+```
+</details>
+
+<details>
  <summary>User Status</summary>
  
 ```
