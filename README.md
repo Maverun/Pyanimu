@@ -10,6 +10,8 @@ I apologize in advance if there is anything missing or implemented incorrectly.
 
 I am ready to be roast.
 
+##### Note, MAL is not available at this moment. There been saying that instead of bring it back up, they might bring up new api version. This is unknown sources. So at this moment, Anilist is working.
+
 ## Requirement Libs:
 ```
 BeautifulSoup, LXML
@@ -18,7 +20,7 @@ and either Aiohttp or Requests depending on what you need for.
 
 ___
 
-# Mal
+# Mal (unavailable atm)
 To create an instance.
 ```python
 from pyanimu import Mal, connectors, Userstatus
@@ -191,3 +193,80 @@ plantowatch
 plantoread
 
 ```
+</details>
+
+
+## Anilist
+
+Please read guideline here [Anilist Doc](https://anilist.gitbooks.io/anilist-apiv2-docs/) to ensure you are not doing something against it.
+This is not for storing or any so reason. This is getting data to be used at a moment.
+
+#### Note: You can do SYNC or ASYNC. all method for async are same expect that you will need to await and use `connectors.AioAnimu()`
+
+To create an instance.
+```python
+from pyanimu import Anilist, connectors, UserStatus_Anilist
+
+con = connectors.ReqAnimu(user_agent = "Pyanimu") # or AioAnimu() for async
+
+
+ani = Anilist(con) #doesn't have to give token unless it is for add/delete methods.
+
+ani.search_anime("Trigun")
+ani.search_anime(6)
+ani.search_manga("Trigun")
+ani.search_manga(30703)
+ani.search_character("Vash")
+ani.search_character(162)
+ani.search_user("Maverun")
+ani.search_user(88464)
+ani.search_studio("MADHOUSE")
+ani.search_studio(11)
+
+#IF wish to add list or update it
+ani = Anilist(con,token)
+
+#To add or update them, you will need token.
+ani.add(6,UserStatus_Anilist.current)
+ani.add(6,UserStatus_Anilist.planning)
+ani.add(6,UserStatus_Anilist.drop)
+ani.add(6,UserStatus_Anilist.pause)
+ani.add(6,UserStatus_Anilist.complete,extra = {"score":100})
+
+#in order to delete it. This is a bit tedious method.
+
+ani.toggle_setting(media_list = True)
+data = ani.search_anime(6)
+entry = data["media"][0]["mediaListEntry"]
+ani.delete(entry["id"]) #To delete it. Note This is require token.
+```
+
+<details>
+ <summary>Method</summary>
+ 
+```
+toggle_setting(char = False,airing_date = False,ranking = False,media_list = False)
+    this will add extra info about char(character) or airing date or ranking or media list to anime/manga data. This is optional but media_list is require for delete.
+search_anime(name)
+search_manga(name)
+search_character(name)
+search_studio(name)
+search_user(name)
+add(id,status,extra)
+delete(id_)
+```
+</details>
+
+<details>
+ <summary>UserStatus_Anilist</summary>
+
+```
+current 
+planning 
+complete 
+drop 
+pause 
+repeat 
+```
+
+</details>

@@ -12,3 +12,10 @@ class Unverify_account(Exception):
     """
     def __init(self,msg):
         self.msg = msg
+
+class Missing_token(Exception):
+    """
+    Missing api token.
+    """
+    def __init__(self,msg):
+        self.msg = msg

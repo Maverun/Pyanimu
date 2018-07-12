@@ -1,6 +1,7 @@
-from .Mal import Mal,UserStatus
+# from .Mal import Mal,UserStatus
+from .Anilist import Anilist,UserStatus_Anilist
 
-__version__ = "0.0.2"
+__version__ = "0.1.0"
 __title__ = "Pyanimu"
 __author__ = "Maverun"
 __license__ = "MIT"

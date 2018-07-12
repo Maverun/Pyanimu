@@ -61,6 +61,7 @@ class Mal:
         self.connect = connection
 
         self.connect.set_auth(username,password)
+        self.connect.has_auth = True
 
     def verify(self):
         try:
