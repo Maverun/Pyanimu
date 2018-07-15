@@ -3,6 +3,9 @@ from .. import error
 def return_data(data):
     return data["data"]["Page"]
 
+def return_mutations(data):
+    return data
+
 class UserStatus_Anilist:
     current = "CURRENT"
     planning = "PLANNING"
@@ -550,7 +553,7 @@ class Anilist:
                 score
             }
         }"""
-        return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":{"mediaId":the_id,"status":status,**extra}},obj = return_data)
+        return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":{"mediaId":the_id,"status":status,**extra}},obj = return_mutations)
 
     def delete(self,id_):
         """
@@ -571,4 +574,4 @@ class Anilist:
                 deleted
             }
         }"""
-        return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":{"id":id_}},obj = return_data)
+        return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":{"id":id_}},obj = return_mutations)
