@@ -42,8 +42,6 @@ class Anilist:
         temp = []
         if char:
             temp.append(self._add_char)
-        if airing_date:
-            temp.append(self._add_airing)
         if ranking:
             temp.append(self._add_ranking)
         if media_list:
@@ -64,22 +62,6 @@ class Anilist:
                 large
                 medium
               }}}"""
-
-    def _add_airing(self):
-        return """\
-        airingSchedule {
-            nodes{
-              airingAt
-              timeUntilAiring
-            }
-          }
-          nextAiringEpisode {
-            id
-            episode
-            airingAt
-            timeUntilAiring
-          }
-        }"""
 
     def _add_ranking(self):
         return"""\
@@ -124,7 +106,7 @@ class Anilist:
 
     def search_anime(self,name):
         data = """\
-        query ($id: Int, $page: Int, $perPage: Int, $search: String) {
+        query ($id: Int,$id_in:[Int],$search: String, $page: Int, $perPage: Int) {
           Page(page: $page, perPage: $perPage) {
             pageInfo {
               total
@@ -133,7 +115,7 @@ class Anilist:
               hasNextPage
               perPage
             }
-            media(id: $id, search: $search, type: ANIME) {
+            media(id: $id,id_in:$id_in search: $search, type: ANIME) {
               id
               idMal
               siteUrl
@@ -197,13 +179,15 @@ class Anilist:
         """.replace("{extra}",self._run_setting()) #terrible way heh
         if isinstance(name,int):
             v = {"id":name}
+        elif isinstance(name,list):
+            v = {"id_in":name}
         else:
             v = {"search":name}
         return self.connection.send_api(self.graphql_endpoint, json = {"query":data,"variables":v}, obj = return_data)
 
     def search_manga(self,name):
         data = """\
-        query ($id: Int, $page: Int, $perPage: Int, $search: String) {
+        query ($id: Int,$id_in:[Int],$search:String, $page: Int, $perPage: Int) {
           Page(page: $page, perPage: $perPage) {
             pageInfo {
               total
@@ -212,7 +196,7 @@ class Anilist:
               hasNextPage
               perPage
             }
-            media(id: $id, search: $search, type: MANGA) {
+            media(id: $id,id_in:$id_in search: $search, type: MANGA) {
               id
               idMal
               siteUrl
@@ -261,6 +245,8 @@ class Anilist:
         }""".replace("{extra}",self._run_setting()) #terrible way heh
         if isinstance(name,int):
             v = {"id":name}
+        elif isinstance(name,list):
+            v = {"id_in":name}
         else:
             v = {"search":name}
         return self.connection.send_api(self.graphql_endpoint, json = {"query":data,"variables":v}, obj = return_data)
@@ -531,6 +517,155 @@ class Anilist:
             v = {"search":name}
         return self.connection.send_api(self.graphql_endpoint, json = {"query":data,"variables":v}, obj = return_data)
 
+    def user(self):
+        """
+        Give info about authenticated user that provide this token.
+        p.s wow this string took 145 lines and person who use this method are likely to be a stalker? (joking)
+
+        Returns: dict
+        """
+        if self.api_token is None:
+           return error.Missing_token("This method need a api token.")
+        query = """
+        query{
+            Viewer{
+              id
+              name
+              about
+              avatar {
+                large
+              }
+              bannerImage
+              options {
+                titleLanguage
+                displayAdultContent
+                airingNotifications
+                profileColor
+              }
+              mediaListOptions {
+                scoreFormat
+                rowOrder
+                animeList {
+                  splitCompletedSectionByFormat
+                  theme
+                  advancedScoringEnabled
+                }
+                mangaList {
+                  splitCompletedSectionByFormat
+                  theme
+                  advancedScoringEnabled
+                }
+              }
+              favourites {
+                anime {
+                  edges {
+                    id
+                  }
+                }
+                manga {
+                  edges {
+                    id
+                  }
+                }
+                characters {
+                  edges {
+                    id
+                  }
+                }
+                staff {
+                  edges {
+                    id
+                  }
+                }
+                studios {
+                  edges {
+                    id
+                  }
+                }
+              }
+              siteUrl
+              donatorTier
+              moderatorStatus
+              updatedAt
+              stats {
+                watchedTime
+                chaptersRead
+                activityHistory {
+                  date
+                  amount
+                  level
+                }
+                animeStatusDistribution {
+                  status
+                  amount
+                }
+                mangaStatusDistribution {
+                  status
+                  amount
+                }
+                animeScoreDistribution {
+                  score
+                  amount
+                }
+                mangaScoreDistribution {
+                  score
+                  amount
+                }
+                animeListScores {
+                  meanScore
+                  standardDeviation
+                }
+                mangaListScores {
+                  meanScore
+                  standardDeviation
+                }
+                favouredGenresOverview {
+                  genre
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredGenres {
+                  genre
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredTags {
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredActors {
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredStaff {
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredStudios {
+                  amount
+                  meanScore
+                  timeWatched
+                }
+                favouredYears {
+                  year
+                  amount
+                  meanScore
+                }
+                favouredFormats {
+                  format
+                  amount
+                }
+              }
+            }
+          }
+        """
+        return self.connection.send_api(self.graphql_endpoint, json={"query": query}, obj=return_mutations)
+
     def add(self,the_id,status,extra = {}):
         """
         Allow to add anime to the list
@@ -575,3 +710,64 @@ class Anilist:
             }
         }"""
         return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":{"id":id_}},obj = return_mutations)
+
+    def airingSchedules(self,var):
+        """
+        Bring up airing schedules.
+        Args:
+            var: dict, any of those, need to be at least 1
+            episode_greater: $eg,
+            airingAt:$airAt,
+            id_in:$id_in,
+            mediaId_in:$mid_in,
+            episode:$ep,
+            id:$id,
+            mediaId:$mid,
+            airingAt_greater:$airAtG,
+            airingAt_lesser:$airAtL,
+            sort:$sort - [ID,ID_DESC,MEDIA_ID,MEDIA_ID_DESC,TIME,TIME_DESC,EPISODE,EPISODE_DESC]
+
+            using $name.
+            for example airing at x and sort from lowest to highest time
+            {
+            "airAtG": x,
+            "sort": "TIME"
+            }
+        Returns: dict
+
+        """
+        query = """
+        query ($page: Int, $perPage: Int,$eg: Int,$airAt:Int,$id_in:[Int],$mid_in:[Int],
+        $ep:Int,$id:Int,$mid:Int,$airAtG:Int,$airAtL:Int,$sort:[AiringSort]) {
+          Page(page: $page, perPage: $perPage) {
+            pageInfo {
+              total
+              currentPage
+              lastPage
+              hasNextPage
+              perPage
+            }
+            
+            airingSchedules(episode_greater: $eg,airingAt:$airAt,id_in:$id_in,
+            mediaId_in:$mid_in,episode:$ep,id:$id,mediaId:$mid,airingAt_greater:$airAtG,
+            airingAt_lesser:$airAtL,sort:$sort) {
+              id
+              airingAt
+              timeUntilAiring
+              episode
+              mediaId
+              media {
+                id
+                idMal
+                siteUrl
+                title {
+                    romaji
+                    english
+                    native
+                }
+              }
+            }
+          }
+        }
+        """
+        return self.connection.send_api(self.graphql_endpoint,json ={"query":query,"variables":var},obj = return_data)

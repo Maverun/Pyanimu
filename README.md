@@ -252,8 +252,10 @@ search_manga(name)
 search_character(name)
 search_studio(name)
 search_user(name)
+user()
 add(id,status,extra)
 delete(id_)
+airingSchedules(var)
 ```
 </details>
 
@@ -269,4 +271,27 @@ pause
 repeat 
 ```
 
+</details>
+
+<details>
+   <summary>airingSchedules method</summary>
+   
+```
+var: dict, any of those, need to be at least 1
+    episode_greater: $eg,
+    airingAt:$airAt,
+    id_in:$id_in,
+    mediaId_in:$mid_in,
+    episode:$ep,
+    id:$id,
+    mediaId:$mid,
+    airingAt_greater:$airAtG,
+    airingAt_lesser:$airAtL,
+    sort:$sort - [ID,ID_DESC,MEDIA_ID,MEDIA_ID_DESC,TIME,TIME_DESC,EPISODE,EPISODE_DESC]
+
+using $name.
+for example airing at x and sort from lowest to highest time
+{"airAtG": x,"sort": "TIME"}
+```
+   
 </details>
