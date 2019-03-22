@@ -666,6 +666,22 @@ class Anilist:
         """
         return self.connection.send_api(self.graphql_endpoint, json={"query": query}, obj=return_mutations)
 
+    def get_user_list(self,variable):
+        query = """
+        query ($id: Int, $username: String,$type:MediaType,$status:MediaListStatus) {
+          MediaListCollection(userId:$id,userName:$username,type:$type,status:$status){
+            lists{
+                entries{
+                  id
+                  mediaId
+                  status
+                }
+            }
+          }
+        }
+    """
+        return self.connection.send_api(self.graphql_endpoint,json = {"query":query,"variables":variable},obj = return_mutations)
+
     def add(self,the_id,status,extra = {}):
         """
         Allow to add anime to the list
