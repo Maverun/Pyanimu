@@ -542,80 +542,35 @@ class Anilist:
               donatorTier
               moderatorStatus
               updatedAt
-              stats {
-                watchedTime
-                chaptersRead
-                activityHistory {
-                  date
-                  amount
-                  level
-                }
-                animeStatusDistribution {
-                  status
-                  amount
-                }
-                mangaStatusDistribution {
-                  status
-                  amount
-                }
-                animeScoreDistribution {
-                  score
-                  amount
-                }
-                mangaScoreDistribution {
-                  score
-                  amount
-                }
-                animeListScores {
+              statistics {
+                anime{
+                  count
                   meanScore
                   standardDeviation
-                }
-                mangaListScores {
+                  minutesWatched
+                  episodesWatched                 	
+                    statuses{
+                    count
+                    meanScore
+                    minutesWatched
+                    chaptersRead
+                    status
+                  }#end of statuse
+                }#end of anime 
+                manga{
+                  count
                   meanScore
                   standardDeviation
-                }
-                favouredGenresOverview {
-                  genre
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredGenres {
-                  genre
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredTags {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredActors {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredStaff {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredStudios {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredYears {
-                  year
-                  amount
-                  meanScore
-                }
-                favouredFormats {
-                  format
-                  amount
-                }
-              }
+                  chaptersRead
+                  volumesRead
+              statuses{
+                    count
+                    meanScore
+                    chaptersRead
+                    status
+                  }#end of statuse
+                }#end of manga
+             }#end of statistics
             }
           }
         """
