@@ -367,150 +367,105 @@ class Anilist:
         """
         data = """\
         query ($id: Int, $page: Int, $perPage: Int, $search: String) {
-          Page(page: $page, perPage: $perPage) {
-            pageInfo {
-              total
-              currentPage
-              lastPage
-              hasNextPage
-              perPage
-            }
-            users(search: $search, id: $id) {
-              id
-              name
-              about
-              avatar {
-                large
-              }
-              bannerImage
-              options {
-                titleLanguage
-                displayAdultContent
-                airingNotifications
-                profileColor
-              }
-              mediaListOptions {
-                scoreFormat
-                rowOrder
-                animeList {
-                  splitCompletedSectionByFormat
-                  theme
-                  advancedScoringEnabled
-                }
-                mangaList {
-                  splitCompletedSectionByFormat
-                  theme
-                  advancedScoringEnabled
-                }
-              }
-              favourites {
-                anime {
-                  edges {
-                    id
+                  Page(page: $page, perPage: $perPage) {
+                    pageInfo {
+                      total
+                      currentPage
+                      lastPage
+                      hasNextPage
+                      perPage
+                    }
+                    users(search: $search, id: $id) {
+                      id
+                      name
+                      about
+                      avatar {
+                        large
+                      }
+                      bannerImage
+                      options {
+                        titleLanguage
+                        displayAdultContent
+                        airingNotifications
+                        profileColor
+                      }
+                      mediaListOptions {
+                        scoreFormat
+                        rowOrder
+                        animeList {
+                          splitCompletedSectionByFormat
+                          theme
+                          advancedScoringEnabled
+                        }
+                        mangaList {
+                          splitCompletedSectionByFormat
+                          theme
+                          advancedScoringEnabled
+                        }
+                      }
+                      favourites {
+                        anime {
+                          edges {
+                            id
+                          }
+                        }
+                        manga {
+                          edges {
+                            id
+                          }
+                        }
+                        characters {
+                          edges {
+                            id
+                          }
+                        }
+                        staff {
+                          edges {
+                            id
+                          }
+                        }
+                        studios {
+                          edges {
+                            id
+                          }
+                        }
+                      }
+                      siteUrl
+                      donatorTier
+                      moderatorStatus
+                      updatedAt
+                      statistics {
+                        anime{
+                          count
+                          meanScore
+                          standardDeviation
+                          minutesWatched
+                          episodesWatched                 	
+                        	statuses{
+                            count
+                            meanScore
+                            minutesWatched
+                            chaptersRead
+                            status
+                          }#end of statuse
+                        }#end of anime 
+                        manga{
+                          count
+                          meanScore
+                          standardDeviation
+                          chaptersRead
+                          volumesRead
+                      statuses{
+                            count
+                            meanScore
+                            chaptersRead
+                            status
+                          }#end of statuse
+                        }#end of manga
+                      }#end of statistics
+            				}
                   }
-                }
-                manga {
-                  edges {
-                    id
-                  }
-                }
-                characters {
-                  edges {
-                    id
-                  }
-                }
-                staff {
-                  edges {
-                    id
-                  }
-                }
-                studios {
-                  edges {
-                    id
-                  }
-                }
-              }
-              siteUrl
-              donatorTier
-              moderatorStatus
-              updatedAt
-              stats {
-                watchedTime
-                chaptersRead
-                activityHistory {
-                  date
-                  amount
-                  level
-                }
-                animeStatusDistribution {
-                  status
-                  amount
-                }
-                mangaStatusDistribution {
-                  status
-                  amount
-                }
-                animeScoreDistribution {
-                  score
-                  amount
-                }
-                mangaScoreDistribution {
-                  score
-                  amount
-                }
-                animeListScores {
-                  meanScore
-                  standardDeviation
-                }
-                mangaListScores {
-                  meanScore
-                  standardDeviation
-                }
-                favouredGenresOverview {
-                  genre
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredGenres {
-                  genre
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredTags {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredActors {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredStaff {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredStudios {
-                  amount
-                  meanScore
-                  timeWatched
-                }
-                favouredYears {
-                  year
-                  amount
-                  meanScore
-                }
-                favouredFormats {
-                  format
-                  amount
-                }
-              }
-            }
-          }
-        }"""
+                }"""
         if isinstance(name,int):
             v = {"id":name}
         else:
